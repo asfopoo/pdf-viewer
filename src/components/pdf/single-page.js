@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Document, Page } from "react-pdf";
 
 export default function SinglePage(props) {
@@ -22,6 +22,12 @@ export default function SinglePage(props) {
     changePage(1);
   }
 
+  function highlight_words(word) {
+    // console.log(document.documentElement.outerHTML.includes('maecenas mauris'))
+    // document.body.innerHTML = document.body.innerHTML.replace(word, `<mark>${word}</mark>`);
+    window.find(word);
+}
+
   const { pdf } = props;
 
   return (
@@ -31,7 +37,9 @@ export default function SinglePage(props) {
         options={{ workerSrc: "/pdf.worker.js" }}
         onLoadSuccess={onDocumentLoadSuccess}
       >
-        <Page pageNumber={pageNumber} />
+        <Page
+          pageNumber={pageNumber}
+        />
       </Document>
       <div>
         <p>
@@ -46,6 +54,12 @@ export default function SinglePage(props) {
           onClick={nextPage}
         >
           Next
+        </button>
+        <button
+          type="button"
+          onClick={() => highlight_words('Vestibulum neque massa, scelerisque sit amet ligula eu, congue molestie mi. Praesent ut')}
+        >
+          Highlight
         </button>
       </div>
     </>
